@@ -1,0 +1,13 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "arnav",
+      "password": "brickparty2026",
+      "name": "Arnav Gupta",
+      "role": "candidate",
+      "email": "arnav@brickparty.com",
+      "createdAt": "2026-02-23"
+    }
+  ]
+}

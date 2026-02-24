@@ -1,0 +1,29 @@
+{
+  "messages": [
+    {
+      "id": 1771891300013,
+      "name": "Arnav Gupta",
+      "email": "candidate@brickparty.com",
+      "subject": "Welcome to the team!",
+      "message": "Thank you all for supporting the Brick Party. Together we will build a better future!",
+      "date": "2/23/2026, 7:01:40 PM",
+      "read": true,
+      "type": "sent",
+      "recipients": [
+        "John Doe",
+        "Jane Smith"
+      ],
+      "replies": []
+    },
+    {
+      "id": 1771890940352,
+      "name": "Test User",
+      "email": "test@example.com",
+      "subject": "Testing the messaging system",
+      "message": "Hello Arnav! This is a test message from the campaign site.",
+      "date": "2/23/2026, 6:55:40 PM",
+      "read": true,
+      "replies": []
+    }
+  ]
+}
