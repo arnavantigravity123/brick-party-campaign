@@ -423,6 +423,18 @@
                         <textarea id="reason" name="reason" rows="4"
                             placeholder="Tell us why you believe in the Brick Party…" required></textarea>
                     </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="regUsername"><i class="fas fa-id-badge"></i> Create Username</label>
+                            <input type="text" id="regUsername" name="regUsername" placeholder="Choose a username"
+                                required minlength="3">
+                        </div>
+                        <div class="form-group">
+                            <label for="regPassword"><i class="fas fa-lock"></i> Create Password</label>
+                            <input type="password" id="regPassword" name="regPassword" placeholder="Choose a password"
+                                required minlength="4">
+                        </div>
+                    </div>
                     <button type="submit" class="form-submit-btn" id="submit-btn">
                         <i class="fas fa-rocket"></i> Join the Movement
                     </button>
@@ -430,7 +442,11 @@
                 <div class="form-success" id="form-success" style="display:none;">
                     <div class="success-icon"><i class="fas fa-check-circle"></i></div>
                     <h3>Welcome to the Brick Party!</h3>
-                    <p>Thank you for joining the movement. Together, we will build a better future!</p>
+                    <p>Your account has been created. You can now log in to your Supporter Dashboard!</p>
+                    <a href="/login"
+                        style="display:inline-block; margin-top:16px; padding:12px 28px; background:linear-gradient(135deg,#5D4037,#795548); color:#fff; border:none; border-radius:12px; font-family:'Oswald',sans-serif; font-size:0.95rem; cursor:pointer; letter-spacing:1px; text-decoration:none; transition:0.3s;">
+                        <i class="fas fa-sign-in-alt"></i> Go to Login
+                    </a>
                 </div>
             </div>
         </div>

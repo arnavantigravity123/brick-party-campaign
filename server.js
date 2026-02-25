@@ -77,10 +77,18 @@ app.get('/api/user/:id', (req, res) => {
 
 // Register new supporter
 app.post('/api/register', (req, res) => {
-    const { firstName, lastName, email, grade, reason } = req.body;
+    const { firstName, lastName, email, grade, reason, username, password } = req.body;
 
-    if (!firstName || !lastName || !email) {
-        return res.status(400).json({ success: false, message: 'First name, last name, and email are required.' });
+    if (!firstName || !lastName || !email || !username || !password) {
+        return res.status(400).json({ success: false, message: 'All fields are required including username and password.' });
+    }
+
+    if (username.length < 3) {
+        return res.status(400).json({ success: false, message: 'Username must be at least 3 characters.' });
+    }
+
+    if (password.length < 4) {
+        return res.status(400).json({ success: false, message: 'Password must be at least 4 characters.' });
     }
 
     const db = readUsers();
@@ -90,10 +98,15 @@ app.post('/api/register', (req, res) => {
         return res.status(409).json({ success: false, message: 'This email is already registered.' });
     }
 
+    // Check for duplicate username
+    if (db.users.find(u => u.username && u.username.toLowerCase() === username.toLowerCase())) {
+        return res.status(409).json({ success: false, message: 'This username is already taken. Please choose another.' });
+    }
+
     const newUser = {
-        id: db.users.length + 1,
-        username: (firstName + lastName[0]).toLowerCase(),
-        password: 'brick' + Math.floor(Math.random() * 9999),
+        id: Date.now(),
+        username: username.toLowerCase(),
+        password: password,
         name: `${firstName} ${lastName}`,
         role: 'supporter',
         email: email,
@@ -107,7 +120,7 @@ app.post('/api/register', (req, res) => {
 
     res.json({
         success: true,
-        message: `Welcome to the Brick Party, ${firstName}!`,
+        message: `Welcome to the Brick Party, ${firstName}! You can now log in.`,
         user: {
             id: newUser.id,
             name: newUser.name,
@@ -311,6 +324,35 @@ app.get('/login', (req, res) => {
 
 app.get('/dashboard', (req, res) => {
     res.sendFile(path.join(__dirname, 'dashboard.html'));
+});
+
+app.get('/supporter-dashboard', (req, res) => {
+    res.sendFile(path.join(__dirname, 'supporter-dashboard.html'));
+});
+
+// Get supporter's own data
+app.get('/api/supporter/:id', (req, res) => {
+    const db = readUsers();
+    const user = db.users.find(u => u.id === parseInt(req.params.id));
+    if (!user || user.role !== 'supporter') {
+        return res.status(404).json({ success: false, message: 'Supporter not found.' });
+    }
+    res.json({
+        success: true,
+        user: {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            grade: user.grade,
+            reason: user.reason,
+            createdAt: user.createdAt
+        }
+    });
+});
+
+// Get announcements (public)
+app.get('/api/announcements', (req, res) => {
+    res.json({ success: true, announcements: [] });
 });
 
 // ═══════════ START ═══════════

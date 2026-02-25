@@ -325,7 +325,7 @@
                     <i class="fas fa-chess-rook"></i>
                 </div>
                 <h1>BRICK PARTY</h1>
-                <p>Candidate & Admin Login</p>
+                <p>Candidate & Supporter Login</p>
             </div>
 
             <form class="login-form" id="login-form">
@@ -368,7 +368,8 @@
         // Check if already logged in
         const session = localStorage.getItem('brickparty_user');
         if (session) {
-            window.location.href = '/dashboard';
+            const savedUser = JSON.parse(session);
+            window.location.href = savedUser.role === 'supporter' ? '/supporter-dashboard' : '/dashboard';
         }
 
         // Login form
@@ -405,7 +406,7 @@
                     loginBtn.style.background = 'linear-gradient(135deg, #2E7D32, #43A047)';
 
                     setTimeout(() => {
-                        window.location.href = '/dashboard';
+                        window.location.href = data.user.role === 'supporter' ? '/supporter-dashboard' : '/dashboard';
                     }, 1200);
                 } else {
                     throw new Error(data.message);

@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supporter Dashboard — Brick Party</title>
+    <meta name="description"
+        content="Your Brick Party supporter dashboard. View announcements, send messages, and stay connected with the campaign.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --brown-700: #5D4037;
+            --brown-500: #795548;
+            --brown-300: #A1887F;
+            --brown-100: #D7CCC8;
+            --brown-50: #EFEBE9;
+            --blue-900: #0D1B3E;
+            --blue-800: #1A237E;
+            --blue-700: #1565C0;
+            --blue-600: #1E88E5;
+            --blue-500: #2196F3;
+            --blue-50: #E3F2FD;
+            --gold-accent: #FFB300;
+            --gold-light: #FFD54F;
+            --red-accent: #C62828;
+            --green: #43A047;
+            --green-light: #E8F5E9;
+            --white: #FFFFFF;
+            --off-white: #F8F6F4;
+            --dark: #1A1A1A;
+            --text-primary: #2C2C2C;
+            --text-secondary: #757575;
+            --sidebar-width: 260px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--off-white);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* ═══════ SIDEBAR ═══════ */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, var(--blue-900) 0%, #1B2A50 100%);
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar-header {
+            padding: 28px 24px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-brand .logo-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: rgba(255, 179, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 179, 0, 0.25);
+        }
+
+        .sidebar-brand .logo-icon i {
+            color: var(--gold-accent);
+            font-size: 1.1rem;
+        }
+
+        .sidebar-brand h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.15rem;
+            color: var(--white);
+            letter-spacing: 2px;
+            line-height: 1.3;
+        }
+
+        .sidebar-brand small {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 0.68rem;
+            color: rgba(255, 255, 255, 0.45);
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 16px 12px;
+            overflow-y: auto;
+        }
+
+        .nav-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 12px 14px 6px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 14px;
+            border-radius: 10px;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.88rem;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .nav-item.active {
+            background: rgba(255, 179, 0, 0.12);
+            color: var(--gold-accent);
+        }
+
+        .nav-item i {
+            width: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-footer {
+            padding: 16px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--green), #66BB6A);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.78rem;
+        }
+
+        .user-details {
+            flex: 1;
+        }
+
+        .user-details .name {
+            color: var(--white);
+            font-weight: 600;
+            font-size: 0.82rem;
+        }
+
+        .user-details .role {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #logout-btn {
+            width: 100%;
+            padding: 10px;
+            background: rgba(198, 40, 40, 0.12);
+            border: 1px solid rgba(198, 40, 40, 0.2);
+            border-radius: 8px;
+            color: #EF9A9A;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: 0.2s;
+            letter-spacing: 1px;
+        }
+
+        #logout-btn:hover {
+            background: rgba(198, 40, 40, 0.25);
+        }
+
+        /* ═══════ MAIN CONTENT ═══════ */
+        .main {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 28px 32px;
+        }
+
+        .page-header {
+            margin-bottom: 24px;
+        }
+
+        .page-header h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.6rem;
+            color: var(--brown-700);
+            letter-spacing: 1px;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            margin-top: 4px;
+        }
+
+        /* ═══════ CARDS ═══════ */
+        .dash-card {
+            background: var(--white);
+            border-radius: 16px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 18px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--brown-50);
+        }
+
+        .card-header h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.05rem;
+            color: var(--brown-700);
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-body {
+            padding: 20px 24px;
+        }
+
+        /* ═══════ STAT CARDS ═══════ */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 22px 24px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .stat-icon.brown {
+            background: rgba(93, 64, 55, 0.1);
+            color: var(--brown-700);
+        }
+
+        .stat-icon.blue {
+            background: rgba(33, 150, 243, 0.1);
+            color: var(--blue-600);
+        }
+
+        .stat-icon.gold {
+            background: rgba(255, 179, 0, 0.1);
+            color: var(--gold-accent);
+        }
+
+        .stat-icon.green {
+            background: rgba(67, 160, 71, 0.1);
+            color: var(--green);
+        }
+
+        .stat-info h4 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            color: var(--brown-700);
+        }
+
+        .stat-info p {
+            font-size: 0.76rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        /* ═══════ PAGES ═══════ */
+        .dashboard-page {
+            display: none;
+        }
+
+        .dashboard-page.active {
+            display: block;
+        }
+
+        /* ═══════ WELCOME BANNER ═══════ */
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--brown-700), var(--brown-500), var(--blue-700));
+            border-radius: 18px;
+            padding: 32px 36px;
+            color: var(--white);
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 179, 0, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .welcome-banner h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.6rem;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+            position: relative;
+        }
+
+        .welcome-banner p {
+            opacity: 0.85;
+            font-size: 0.92rem;
+            position: relative;
+        }
+
+        /* ═══════ MESSAGE ITEM ═══════ */
+        .message-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--brown-50);
+            transition: 0.15s;
+        }
+
+        .message-item:hover {
+            background: var(--off-white);
+        }
+
+        .msg-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.78rem;
+            flex-shrink: 0;
+        }
+
+        .msg-content {
+            flex: 1;
+        }
+
+        .msg-name {
+            font-weight: 600;
+            font-size: 0.88rem;
+            color: var(--brown-700);
+        }
+
+        .msg-time {
+            float: right;
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+        }
+
+        .msg-text {
+            font-size: 0.84rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            line-height: 1.5;
+        }
+
+        /* ═══════ ANNOUNCEMENT ITEM ═══════ */
+        .announcement-item {
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--brown-50);
+            transition: 0.15s;
+        }
+
+        .announcement-item:hover {
+            background: var(--off-white);
+        }
+
+        .ann-text {
+            font-size: 0.92rem;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .ann-meta {
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* ═══════ PLATFORM CARD ═══════ */
+        .platform-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--brown-50);
+        }
+
+        .platform-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.1rem;
+        }
+
+        .platform-icon.p1 {
+            background: rgba(33, 150, 243, 0.1);
+            color: var(--blue-600);
+        }
+
+        .platform-icon.p2 {
+            background: rgba(67, 160, 71, 0.1);
+            color: var(--green);
+        }
+
+        .platform-icon.p3 {
+            background: rgba(255, 179, 0, 0.1);
+            color: var(--gold-accent);
+        }
+
+        .platform-icon.p4 {
+            background: rgba(198, 40, 40, 0.1);
+            color: var(--red-accent);
+        }
+
+        .platform-icon.p5 {
+            background: rgba(93, 64, 55, 0.1);
+            color: var(--brown-700);
+        }
+
+        .platform-info h4 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
+            color: var(--brown-700);
+            letter-spacing: 0.5px;
+        }
+
+        .platform-info p {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            line-height: 1.5;
+        }
+
+        /* ═══════ FORM STYLES ═══════ */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--brown-700);
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--brown-100);
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            transition: 0.2s;
+            background: var(--off-white);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--blue-500);
+            background: var(--white);
+        }
+
+        .btn-primary {
+            padding: 12px 28px;
+            background: linear-gradient(135deg, var(--brown-700), var(--brown-500));
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(93, 64, 55, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ═══════ PROFILE CARD ═══════ */
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .profile-field {
+            padding: 14px 18px;
+            background: var(--off-white);
+            border-radius: 12px;
+            border: 1px solid var(--brown-50);
+        }
+
+        .profile-field .label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .profile-field .value {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--brown-700);
+            margin-top: 4px;
+        }
+
+        /* ═══════ TOAST ═══════ */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 14px 24px;
+            background: var(--brown-700);
+            color: var(--white);
+            border-radius: 12px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* ═══════ EMPTY STATE ═══════ */
+        .empty-state {
+            padding: 48px 24px;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: 2.4rem;
+            margin-bottom: 12px;
+            color: var(--brown-300);
+        }
+
+        .empty-state p {
+            font-size: 0.88rem;
+        }
+
+        /* ═══════ RESPONSIVE ═══════ */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand">
+                <div class="logo-icon"><i class="fas fa-chess-rook"></i></div>
+                <div>
+                    <h2>BRICK PARTY</h2>
+                    <small>Supporter Dashboard</small>
+                </div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-label">Main</div>
+            <div class="nav-item active" onclick="showPage('home')">
+                <i class="fas fa-home"></i> Home
+            </div>
+            <div class="nav-item" onclick="showPage('announcements')">
+                <i class="fas fa-bullhorn"></i> Announcements
+            </div>
+            <div class="nav-item" onclick="showPage('platform')">
+                <i class="fas fa-scroll"></i> Party Platform
+            </div>
+
+            <div class="nav-label">Communication</div>
+            <div class="nav-item" onclick="showPage('messages')">
+                <i class="fas fa-envelope"></i> Messages
+                <span id="nav-msg-count"
+                    style="margin-left:auto; background:var(--gold-accent); color:var(--dark); padding:2px 8px; border-radius:50px; font-size:0.68rem; font-weight:700;">0</span>
+            </div>
+
+            <div class="nav-label">Account</div>
+            <div class="nav-item" onclick="showPage('profile')">
+                <i class="fas fa-user-circle"></i> My Profile
+            </div>
+            <div class="nav-item" onclick="showPage('settings')">
+                <i class="fas fa-cog"></i> Settings
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="user-avatar" id="user-avatar">??</div>
+                <div class="user-details">
+                    <div class="name" id="sidebar-name">Supporter</div>
+                    <div class="role">Supporter</div>
+                </div>
+            </div>
+            <button id="logout-btn"><i class="fas fa-sign-out-alt"></i> LOGOUT</button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- ═══════ HOME PAGE ═══════ -->
+        <div class="dashboard-page active" id="page-home">
+            <div class="welcome-banner">
+                <h2><i class="fas fa-star" style="color:var(--gold-accent);"></i> Welcome back, <span
+                        id="welcome-name">Supporter</span>!</h2>
+                <p>Thank you for supporting the Brick Party. Stay connected with the campaign here.</p>
+            </div>
+
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-icon brown"><i class="fas fa-users"></i></div>
+                    <div class="stat-info">
+                        <h4 id="stat-supporters">0</h4>
+                        <p>Total Supporters</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon blue"><i class="fas fa-envelope"></i></div>
+                    <div class="stat-info">
+                        <h4 id="stat-messages">0</h4>
+                        <p>Your Messages</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon gold"><i class="fas fa-calendar-check"></i></div>
+                    <div class="stat-info">
+                        <h4 id="stat-joined">—</h4>
+                        <p>Member Since</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green"><i class="fas fa-check-circle"></i></div>
+                    <div class="stat-info">
+                        <h4>Active</h4>
+                        <p>Your Status</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="dash-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                </div>
+                <div class="card-body" style="display:flex; gap:12px; flex-wrap:wrap;">
+                    <button class="btn-primary" onclick="showPage('messages')"><i class="fas fa-pen"></i> Send Message
+                        to Candidate</button>
+                    <button class="btn-primary" onclick="showPage('platform')"
+                        style="background:linear-gradient(135deg,var(--blue-700),var(--blue-600));"><i
+                            class="fas fa-scroll"></i> View Platform</button>
+                    <button class="btn-primary" onclick="showPage('announcements')"
+                        style="background:linear-gradient(135deg,#E65100,#FF8F00);"><i class="fas fa-bullhorn"></i>
+                        Announcements</button>
+                </div>
+            </div>
+
+            <!-- Recent Announcements -->
+            <div class="dash-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-bullhorn"></i> Latest Announcements</h3>
+                </div>
+                <div id="home-announcements">
+                    <div class="empty-state"><i class="fas fa-bullhorn"></i>
+                        <p>No announcements yet. Check back soon!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ ANNOUNCEMENTS PAGE ═══════ -->
+        <div class="dashboard-page" id="page-announcements">
+            <div class="page-header">
+                <h1><i class="fas fa-bullhorn" style="color:var(--gold-accent);"></i> Announcements</h1>
+                <p>Campaign updates and news from the candidate.</p>
+            </div>
+            <div class="dash-card">
+                <div id="announcements-list">
+                    <div class="empty-state"><i class="fas fa-bullhorn"></i>
+                        <p>No announcements have been posted yet. Check back soon!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ PLATFORM PAGE ═══════ -->
+        <div class="dashboard-page" id="page-platform">
+            <div class="page-header">
+                <h1><i class="fas fa-scroll" style="color:var(--gold-accent);"></i> Party Platform</h1>
+                <p>What the Brick Party stands for — our core policies and promises.</p>
+            </div>
+            <div class="dash-card">
+                <div class="platform-item">
+                    <div class="platform-icon p1"><i class="fas fa-shield-halved"></i></div>
+                    <div class="platform-info">
+                        <h4>Strong School Safety</h4>
+                        <p>Implementing comprehensive safety programs, anti-bullying initiatives, and creating a secure
+                            environment where every student feels protected and valued in their school community.</p>
+                    </div>
+                </div>
+                <div class="platform-item">
+                    <div class="platform-icon p2"><i class="fas fa-leaf"></i></div>
+                    <div class="platform-info">
+                        <h4>Green Campus Initiative</h4>
+                        <p>Promoting environmental sustainability through recycling programs, reducing waste in
+                            cafeterias, planting campus gardens, and educating students about ecological responsibility.
+                        </p>
+                    </div>
+                </div>
+                <div class="platform-item">
+                    <div class="platform-icon p3"><i class="fas fa-lightbulb"></i></div>
+                    <div class="platform-info">
+                        <h4>Tech & Innovation</h4>
+                        <p>Advocating for modern technology in classrooms, coding clubs, STEM resources, and preparing
+                            students for the digital future with hands-on learning opportunities.</p>
+                    </div>
+                </div>
+                <div class="platform-item">
+                    <div class="platform-icon p4"><i class="fas fa-heart"></i></div>
+                    <div class="platform-info">
+                        <h4>Mental Health Support</h4>
+                        <p>Expanding counseling services, establishing peer support groups, creating quiet zones, and
+                            ensuring every student has access to mental health resources when they need them.</p>
+                    </div>
+                </div>
+                <div class="platform-item">
+                    <div class="platform-icon p5"><i class="fas fa-hands-helping"></i></div>
+                    <div class="platform-info">
+                        <h4>Community Building</h4>
+                        <p>Fostering unity through inclusive events, cultural celebrations, volunteer opportunities, and
+                            building bridges between different student groups to create a stronger school community.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ MESSAGES PAGE ═══════ -->
+        <div class="dashboard-page" id="page-messages">
+            <div class="page-header">
+                <h1><i class="fas fa-envelope" style="color:var(--gold-accent);"></i> Messages</h1>
+                <p>Send messages directly to the candidate and view your conversation history.</p>
+            </div>
+
+            <!-- Compose -->
+            <div class="dash-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-pen-fancy"></i> Send Message to Arnav Gupta</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label><i class="fas fa-tag"></i> Subject</label>
+                        <input type="text" id="msg-subject" placeholder="What would you like to discuss?">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-comment-dots"></i> Your Message</label>
+                        <textarea id="msg-body" rows="5" placeholder="Write your message to the candidate..."
+                            style="resize:vertical;"></textarea>
+                    </div>
+                    <button class="btn-primary" id="send-msg-btn" onclick="sendMessage()"><i
+                            class="fas fa-paper-plane"></i> Send Message</button>
+                </div>
+            </div>
+
+            <!-- Message History -->
+            <div class="dash-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-history"></i> Your Message History</h3>
+                </div>
+                <div id="my-messages-list">
+                    <div class="empty-state"><i class="fas fa-envelope-open"></i>
+                        <p>You haven't sent any messages yet. Write one above!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ PROFILE PAGE ═══════ -->
+        <div class="dashboard-page" id="page-profile">
+            <div class="page-header">
+                <h1><i class="fas fa-user-circle" style="color:var(--gold-accent);"></i> My Profile</h1>
+                <p>Your supporter profile details.</p>
+            </div>
+            <div class="dash-card">
+                <div class="card-body">
+                    <div style="display:flex; align-items:center; gap:20px; margin-bottom:28px;">
+                        <div id="profile-avatar"
+                            style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--brown-700),var(--brown-500));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:1.5rem;font-family:'Oswald',sans-serif;">
+                            ??</div>
+                        <div>
+                            <h2 id="profile-name"
+                                style="font-family:'Oswald',sans-serif; color:var(--brown-700); font-size:1.4rem; letter-spacing:1px;">
+                                —</h2>
+                            <p style="color:var(--text-secondary); font-size:0.85rem;"><i class="fas fa-chess-rook"
+                                    style="color:var(--gold-accent);"></i> Brick Party Supporter</p>
+                        </div>
+                    </div>
+                    <div class="profile-grid" id="profile-grid">
+                        <div class="profile-field">
+                            <div class="label">Email</div>
+                            <div class="value" id="profile-email">—</div>
+                        </div>
+                        <div class="profile-field">
+                            <div class="label">Grade</div>
+                            <div class="value" id="profile-grade">—</div>
+                        </div>
+                        <div class="profile-field">
+                            <div class="label">Member Since</div>
+                            <div class="value" id="profile-joined">—</div>
+                        </div>
+                        <div class="profile-field">
+                            <div class="label">Status</div>
+                            <div class="value" style="color:var(--green);"><i class="fas fa-check-circle"></i> Active
+                                Supporter</div>
+                        </div>
+                    </div>
+                    <div style="margin-top:24px;">
+                        <h4 style="font-family:'Oswald',sans-serif; color:var(--brown-700); margin-bottom:8px;"><i
+                                class="fas fa-comment-dots"></i> Why I Support the Brick Party</h4>
+                        <p id="profile-reason"
+                            style="color:var(--text-secondary); font-size:0.88rem; line-height:1.6; background:var(--off-white); padding:16px 20px; border-radius:12px; border:1px solid var(--brown-50); font-style:italic;">
+                            —</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ SETTINGS PAGE ═══════ -->
+        <div class="dashboard-page" id="page-settings">
+            <div class="page-header">
+                <h1><i class="fas fa-cog" style="color:var(--gold-accent);"></i> Settings</h1>
+                <p>Update your account settings.</p>
+            </div>
+            <div class="dash-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-lock"></i> Change Password</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label><i class="fas fa-lock"></i> New Password</label>
+                        <input type="password" id="new-password" placeholder="Enter new password" minlength="4">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-lock"></i> Confirm New Password</label>
+                        <input type="password" id="confirm-password" placeholder="Confirm new password" minlength="4">
+                    </div>
+                    <button class="btn-primary" onclick="changePassword()"><i class="fas fa-save"></i> Update
+                        Password</button>
+                </div>
+            </div>
+            <div class="dash-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-palette"></i> About This Dashboard</h3>
+                </div>
+                <div class="card-body">
+                    <p style="color:var(--text-secondary); font-size:0.88rem; line-height:1.6;">
+                        This is your personal Brick Party Supporter Dashboard. Here you can view campaign announcements,
+                        read the party platform, send messages to the candidate, and manage your account.
+                        All messages are private and only visible to you and the candidate.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ═══════════════════════════════════════
+        // AUTH CHECK
+        // ═══════════════════════════════════════
+        const user = JSON.parse(localStorage.getItem('brickparty_user'));
+        if (!user || user.role !== 'supporter') {
+            window.location.href = '/login';
+        }
+
+        // Populate user info
+        const initials = user.name.split(' ').map(w => w[0]).join('').substring(0, 2);
+        document.getElementById('user-avatar').textContent = initials;
+        document.getElementById('sidebar-name').textContent = user.name;
+        document.getElementById('welcome-name').textContent = user.name.split(' ')[0];
+        document.getElementById('profile-avatar').textContent = initials;
+        document.getElementById('profile-name').textContent = user.name;
+
+        // ═══════════════════════════════════════
+        // NAVIGATION
+        // ═══════════════════════════════════════
+        function showPage(page) {
+            document.querySelectorAll('.dashboard-page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById('page-' + page).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // ═══════════════════════════════════════
+        // TOAST
+        // ═══════════════════════════════════════
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+
+        // ═══════════════════════════════════════
+        // LOAD PROFILE
+        // ═══════════════════════════════════════
+        async function loadProfile() {
+            try {
+                const res = await fetch('/api/supporter/' + user.id);
+                const data = await res.json();
+                if (data.success) {
+                    const u = data.user;
+                    document.getElementById('profile-email').textContent = u.email;
+                    document.getElementById('profile-grade').textContent = u.grade ? u.grade + 'th Grade' : 'Not specified';
+                    document.getElementById('profile-joined').textContent = u.createdAt;
+                    document.getElementById('profile-reason').textContent = u.reason || 'No reason provided';
+                    document.getElementById('stat-joined').textContent = u.createdAt;
+                }
+            } catch (e) { console.error(e); }
+        }
+
+        // ═══════════════════════════════════════
+        // LOAD STATS
+        // ═══════════════════════════════════════
+        async function loadStats() {
+            try {
+                const res = await fetch('/api/supporters');
+                const data = await res.json();
+                document.getElementById('stat-supporters').textContent = data.supporters.length;
+            } catch (e) { }
+        }
+
+        // ═══════════════════════════════════════
+        // LOAD ANNOUNCEMENTS
+        // ═══════════════════════════════════════
+        function loadAnnouncements() {
+            const stored = JSON.parse(localStorage.getItem('brick_announcements') || '[]');
+            renderAnnouncements('announcements-list', stored);
+            renderAnnouncements('home-announcements', stored.slice(0, 3));
+        }
+
+        function renderAnnouncements(containerId, list) {
+            const el = document.getElementById(containerId);
+            if (!list.length) {
+                el.innerHTML = '<div class="empty-state"><i class="fas fa-bullhorn"></i><p>No announcements have been posted yet. Check back soon!</p></div>';
+                return;
+            }
+            let html = '';
+            list.forEach(a => {
+                html += '<div class="announcement-item">' +
+                    '<div class="ann-text">' + a.text + '</div>' +
+                    '<div class="ann-meta"><span><i class="fas fa-user"></i> ' + a.author + '</span><span><i class="fas fa-clock"></i> ' + a.date + '</span></div>' +
+                    '</div>';
+            });
+            el.innerHTML = html;
+        }
+
+        // ═══════════════════════════════════════
+        // MESSAGES
+        // ═══════════════════════════════════════
+        async function sendMessage() {
+            const subject = document.getElementById('msg-subject').value.trim();
+            const body = document.getElementById('msg-body').value.trim();
+
+            if (!body) {
+                showToast('Please write a message before sending.');
+                return;
+            }
+
+            const btn = document.getElementById('send-msg-btn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('/api/messages', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: user.name,
+                        email: user.email,
+                        subject: subject || 'No Subject',
+                        message: body
+                    })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showToast('Message sent to the candidate!');
+                    document.getElementById('msg-subject').value = '';
+                    document.getElementById('msg-body').value = '';
+                    loadMyMessages();
+                } else {
+                    showToast(data.message || 'Failed to send.');
+                }
+            } catch (e) {
+                showToast('Could not connect to server.');
+            }
+
+            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+            btn.disabled = false;
+        }
+
+        async function loadMyMessages() {
+            try {
+                const res = await fetch('/api/messages');
+                const data = await res.json();
+                const mine = data.messages.filter(m => m.email === user.email && m.type !== 'sent');
+                document.getElementById('stat-messages').textContent = mine.length;
+                document.getElementById('nav-msg-count').textContent = mine.length;
+
+                const container = document.getElementById('my-messages-list');
+                if (!mine.length) {
+                    container.innerHTML = '<div class="empty-state"><i class="fas fa-envelope-open"></i><p>You haven\'t sent any messages yet. Write one above!</p></div>';
+                    return;
+                }
+
+                const colors = ['#5D4037', '#1565C0', '#E65100', '#2E7D32', '#6A1B9A', '#C62828', '#00838F'];
+                let html = '';
+                mine.forEach((m, i) => {
+                    const c = colors[i % colors.length];
+                    const ini = m.name.split(' ').map(w => w[0]).join('').substring(0, 2);
+                    let repliesHtml = '';
+                    if (m.replies && m.replies.length) {
+                        repliesHtml = m.replies.map(r =>
+                            '<div style="margin-top:10px; padding:10px 14px; background:rgba(67,160,71,0.06); border-left:3px solid var(--green); border-radius:8px;">' +
+                            '<div style="font-size:0.78rem; font-weight:600; color:var(--green);">' + r.from + ' <span style="font-weight:400; color:var(--text-secondary);">' + r.date + '</span></div>' +
+                            '<div style="font-size:0.84rem; color:var(--text-primary); margin-top:4px;">' + r.text + '</div></div>'
+                        ).join('');
+                    }
+                    html += '<div class="message-item">' +
+                        '<div class="msg-avatar" style="background:' + c + '">' + ini + '</div>' +
+                        '<div class="msg-content">' +
+                        '<span class="msg-name">' + m.name + '</span>' +
+                        '<span class="msg-time">' + m.date + '</span>' +
+                        '<div style="font-size:0.78rem; color:var(--blue-600); margin-top:2px;"><strong>Subject:</strong> ' + m.subject + '</div>' +
+                        '<p class="msg-text">"' + m.message + '"</p>' +
+                        (m.read ? '<span style="font-size:0.68rem; color:var(--green);"><i class="fas fa-check-double"></i> Read by candidate</span>' : '<span style="font-size:0.68rem; color:var(--gold-accent);"><i class="fas fa-clock"></i> Awaiting review</span>') +
+                        repliesHtml +
+                        '</div></div>';
+                });
+                container.innerHTML = html;
+            } catch (e) { console.error(e); }
+        }
+
+        // ═══════════════════════════════════════
+        // CHANGE PASSWORD
+        // ═══════════════════════════════════════
+        async function changePassword() {
+            const newPass = document.getElementById('new-password').value;
+            const confirmPass = document.getElementById('confirm-password').value;
+
+            if (!newPass || newPass.length < 4) {
+                showToast('Password must be at least 4 characters.');
+                return;
+            }
+            if (newPass !== confirmPass) {
+                showToast('Passwords do not match.');
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/user/' + user.id + '/password', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password: newPass })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showToast('Password updated successfully!');
+                    document.getElementById('new-password').value = '';
+                    document.getElementById('confirm-password').value = '';
+                } else {
+                    showToast(data.message || 'Failed to update password.');
+                }
+            } catch (e) {
+                showToast('Could not connect to server.');
+            }
+        }
+
+        // ═══════════════════════════════════════
+        // LOGOUT
+        // ═══════════════════════════════════════
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            localStorage.removeItem('brickparty_user');
+            window.location.href = '/login';
+        });
+
+        // ═══════════════════════════════════════
+        // BOOT
+        // ═══════════════════════════════════════
+        loadProfile();
+        loadStats();
+        loadAnnouncements();
+        loadMyMessages();
+    </script>
+</body>
+
+</html>

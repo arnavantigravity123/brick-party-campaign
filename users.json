@@ -8,6 +8,17 @@
       "role": "candidate",
       "email": "arnav@brickparty.com",
       "createdAt": "2026-02-23"
+    },
+    {
+      "id": 1771979551462,
+      "username": "maya",
+      "password": "maya1234",
+      "name": "Maya Patel",
+      "role": "supporter",
+      "email": "maya@school.edu",
+      "grade": "10",
+      "reason": "I believe in the Brick Party platform for a better school!",
+      "createdAt": "2026-02-25"
     }
   ]
 }

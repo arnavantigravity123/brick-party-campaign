@@ -266,17 +266,19 @@ function initForm() {
         const email = document.getElementById('email').value.trim();
         const grade = document.getElementById('grade').value;
         const reason = document.getElementById('reason').value.trim();
+        const username = document.getElementById('regUsername').value.trim();
+        const password = document.getElementById('regPassword').value;
 
         // Animate submit button
         const btn = document.getElementById('submit-btn');
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Joining...';
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
         btn.disabled = true;
 
         try {
             const res = await fetch('/api/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ firstName, lastName, email, grade, reason })
+                body: JSON.stringify({ firstName, lastName, email, grade, reason, username, password })
             });
 
             const data = await res.json();
