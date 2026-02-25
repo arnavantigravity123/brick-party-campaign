@@ -59,7 +59,7 @@ function initScrollReveal() {
     revealElements.forEach(el => observer.observe(el));
 }
 
-// ═══════════ 500 FAKE SUPPORTERS ═══════════
+// ═══════════ 2000 FAKE SUPPORTERS ═══════════
 function generateSupporters() {
     const firstNames = [
         'James', 'Mary', 'John', 'Patricia', 'Robert', 'Jennifer', 'Michael', 'Linda', 'David', 'Elizabeth',
@@ -112,7 +112,7 @@ function generateSupporters() {
     const chipStyles = ['chip-style-1', 'chip-style-2', 'chip-style-3', 'chip-style-4', 'chip-style-5', 'chip-style-6'];
     const fragment = document.createDocumentFragment();
 
-    for (let i = 0; i < 500; i++) {
+    for (let i = 0; i < 2000; i++) {
         const first = firstNames[Math.floor(Math.random() * firstNames.length)];
         const last = lastNames[Math.floor(Math.random() * lastNames.length)];
         const style = chipStyles[i % chipStyles.length];
@@ -214,7 +214,7 @@ function generateMessages() {
 // ═══════════ COUNTER ANIMATION ═══════════
 function initCounter() {
     const counter = document.getElementById('animated-counter');
-    const target = 500;
+    const target = 2000;
     let current = 0;
     let started = false;
 
